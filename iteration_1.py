@@ -1,5 +1,5 @@
 import sys
-import re
+from preprocess import preprocess_text_to_list
 
 
 def merge_sort(array: list[str]) -> list[str]:
@@ -28,6 +28,7 @@ def merge(left_array: list[str], right_array: list[str]) -> list[str]:
     return result
 
 
+# Bucket sort
 def word_count_sort(word_counts: list[tuple[int, str]]) -> list[tuple[int, str]]:
     if not word_counts:
         return []
@@ -37,7 +38,7 @@ def word_count_sort(word_counts: list[tuple[int, str]]) -> list[tuple[int, str]]
     for count, word in word_counts:
         count_array[count].append(word)
     result = []
-    for count in range(max_count, 0, -1):
+    for count in range(max_count, 0, -1):  # Could reduce this by only iterating over top 20
         for word in count_array[count]:
             result.append((count, word))
     return result
@@ -58,11 +59,7 @@ if __name__ == "__main__":
     except Exception as e:
         print(f"Could not read file {filename}: {e}")
 
-    # Preprocess
-    text = text.lower()
-    text = re.sub(r'[.,();{}[\]\s]+', '\n', text)
-    text = re.sub(r'[^a-z\n]+', '', text)
-    words = [word for word in text.split('\n') if word]
+    words = preprocess_text_to_list(text)
 
     """
     At this point my first thought is to use merge sort algorithm on first characters
@@ -80,8 +77,8 @@ if __name__ == "__main__":
             current_word_count = 1
         else:
             current_word_count += 1
-    print(counted_words[:20])
 
     # Sort counted words using a counting sort
     sorted_words = word_count_sort(counted_words)
-    print(sorted_words[:20])
+    for count, word in sorted_words[:20]:
+        print(f"{count} {word}")

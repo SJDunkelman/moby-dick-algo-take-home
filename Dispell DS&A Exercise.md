@@ -23,3 +23,19 @@ Broken down this means:
 Outcome: 
 * Whilst the output looks reasonable, it produces different counts to the same bash file run in the terminal
 * We also don't preserve case for 'I'
+
+Time & Space complexity:
+Merge Sort: O(nlogn) (divide is O(logn) and sort is O(n))
+We then loop through and count consecutive lines which is O(n)
+Therefore total complexity is O(2logn)
+
+## Iteration 2
+
+Improvements:
+* I want to increase the ability to handle large files (we should read line-by-line)
+* Improve the efficiency of sorting
+* Handle binary files
+
+I read this StackOverflow article on heuristics around [number of hash buckets](https://stackoverflow.com/questions/225621/how-many-hash-buckets)
+
+We use a min heap to maintain the 20 most common elements
